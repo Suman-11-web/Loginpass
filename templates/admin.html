@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workspace OS - Admin</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="admin-body">
+
+    <div class="dashboard-layout">
+        
+        <aside class="glass-sidebar">
+            <div class="brand">
+                <h2>Workspace<span>OS</span></h2>
+            </div>
+            <ul class="nav-menu">
+                <li class="active"><a href="#">Dashboard</a></li>
+                <li><a href="#">User Management</a></li>
+                <li><a href="#">Settings</a></li>
+                <li class="logout"><a href="/">Exit to Login</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            
+            <header class="top-nav glass-panel">
+                <h1>Overview</h1>
+                <div class="admin-profile">
+                    <span class="admin-name">suman007</span>
+                    <div class="admin-avatar">S</div>
+                </div>
+            </header>
+
+            <div class="stats-grid">
+                <div class="glass-panel stat-card">
+                    <h3>Total Users</h3>
+                    <p class="stat-value">{{ users|length }}</p> 
+                </div>
+                <div class="glass-panel stat-card">
+                    <h3>System Status</h3>
+                    <p class="stat-value text-success">Online</p>
+                </div>
+                <div class="glass-panel stat-card">
+                    <h3>Database</h3>
+                    <p class="stat-value text-blue">Connected</p>
+                </div>
+            </div>
+
+            <div class="glass-panel table-container">
+                <div class="table-header">
+                    <h2>Registered Accounts</h2>
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="glass-table pro-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>User Profile</th>
+                                <th>Password</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in users %}
+                            <tr>
+                                <td class="id-cell">#{{user[0]}}</td>
+                                <td>
+                                    <div class="user-profile-cell">
+                                        <div class="user-avatar">{{ user[1][:1] | upper }}</div>
+                                        <div class="user-details">
+                                            <div class="username">{{user[1]}}</div>
+                                            <div class="email">{{user[2]}}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><span class="password-mask">{{user[3]}}</span></td>
+                                <td><span class="status-pill active">Active</span></td>
+                                <td>
+                                    <a href="/delete/{{user[0]}}" class="btn-delete">Delete</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            
+                            {% if not users %}
+                            <tr>
+                                <td colspan="5" class="empty-state">No users found in the database.</td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+</body>
+</html>
